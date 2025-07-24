@@ -1,10 +1,34 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { WebView } from 'react-native-webview';
-import { StyleSheet, ActivityIndicator, View } from 'react-native';
+import { StyleSheet, ActivityIndicator, View, BackHandler, ToastAndroid } from 'react-native';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const backPressCount = useRef(0);
+
+  useEffect(() => {
+    const backAction = () => {
+      if (backPressCount.current < 1) {
+        backPressCount.current += 1;
+        ToastAndroid.show('Press back again to exit', ToastAndroid.SHORT);
+        setTimeout(() => {
+          backPressCount.current = 0;
+        }, 2000);
+        return true;
+      } else {
+        BackHandler.exitApp();
+        return false;
+      }
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -13,6 +37,7 @@ export default function App() {
         style={styles.webview}
         javaScriptEnabled={true}
         domStorageEnabled={true}
+        mediaPlaybackRequiresUserAction={false}
         onLoadStart={() => setLoading(true)}
         onLoadEnd={() => setLoading(false)}
       />
