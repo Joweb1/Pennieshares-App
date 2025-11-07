@@ -17,9 +17,8 @@ export default function AppLayout() {
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style="light" />
-      <View style={{ height: Constants.statusBarHeight, backgroundColor: '#046DDC' }} />
-      <Stack>
-        <Stack.Screen name="FingerprintAuthScreen" options={{ headerShown: false }} />
+      <View style={{ height: Constants.statusBarHeight, backgroundColor: '#00005c' }} />
+      <Stack initialRouteName="(tabs)">
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
     </View>

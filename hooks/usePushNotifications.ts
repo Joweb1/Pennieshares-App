@@ -77,6 +77,8 @@ export function usePushNotifications() {
     registerForPushNotificationsAsync().then(token => {
       if (token) {
         setExpoPushToken(token.data);
+        // Temporarily commented out to debug network issue
+        /*
         fetch('https://penniepoint.com/save-subscription.php', {
           method: 'POST',
           headers: {
@@ -90,6 +92,7 @@ export function usePushNotifications() {
         }).catch(error => {
           console.error('Error sending Expo Push Token to backend:', error);
         });
+        */
       }
     });
 
@@ -104,10 +107,10 @@ export function usePushNotifications() {
 
     return () => {
       if (notificationListener.current) {
-        Notifications.removeNotificationSubscription(notificationListener.current);
+        notificationListener.current.remove();
       }
       if (responseListener.current) {
-        Notifications.removeNotificationSubscription(responseListener.current);
+        responseListener.current.remove();
       }
     };
   }, []);

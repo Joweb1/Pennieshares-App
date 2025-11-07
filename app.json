@@ -2,50 +2,70 @@
   "expo": {
     "name": "Pennieshares",
     "slug": "pennieshares-app",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "scheme": "penniesharesapp",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "notification": {
+      "icon": "./assets/images/picon.png",
+      "color": "#000000"
+    },
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         }
-      }
+      },
+      "bundleIdentifier": "com.codewithmobile.penniesharesapp"
     },
     "android": {
+      "package": "com.codewithmobile.penniesharesapp",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.png",
-        "backgroundColor": "#FFFFFF"
-      },
-      "notification": {
-        "icon": "./assets/images/picon.png",
-        "color": "#000000" 
+        "foregroundImage": "./assets/images/logo.png",
+        "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.codewithmobile.penniesharesapp",
-      "usesCleartextTraffic": true
+      "permissions": [
+        "android.permission.USE_BIOMETRIC"
+      ]
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/logo.png"
+      "favicon": "./assets/images/logo.png",
+      "notification": {
+        "vapidPublicKey": "BPQrCLmDAgAAPXrz0Y7zm_T2qY-vn3rKdUgmhfKmGom7eYFTiWHugTBybhos6FFVbqM0mkSIke32Jgsi_V5j8wI"
+      }
     },
     "plugins": [
       "expo-router",
+      "expo-dev-client",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/logo2.png",
+          "image": "./assets/images/splash.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#FFFFFF"
         }
       ],
-      "./plugins/withNetworkSecurityConfig.js"
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID."
+        }
+      ],
+      "./plugins/withNetworkSecurityConfig.js",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
